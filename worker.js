@@ -1,28 +1,21 @@
 /*
-	petfinder-firebase.js - node js script - bryon.nicoson@gmail.com
+	petfinder-firebase worker.js - node js script - bryon.nicoson@gmail.com
+	running this on heroku
+
 	1) retrieve petfinder api data for shelter animals
 	2) format/edit data 
 	3) update firebase with formatted data
 	4) remove placed animals from firebase
  */
 
-//require('dotenv').config({ silent: true });
-
+const schedule = require("node-schedule");
 const admin = require("firebase-admin");
 	
-admin.initializeApp({
-  	credential: admin.credential.cert({
-  		"private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
-  		"client_email": process.env.FIREBASE_CLIENT_EMAIL
-  	}),
-  	databaseURL: "https://petfirebase-01.firebaseio.com"
+var work = schedule.scheduleJob('42 * * * *', function() {
+	console.log("running");	
+	main()
+		.catch(e => {console.log(e)});
 });
-
-const database = admin.database();
-const ref = database.ref('dogs');
-
-main()
-	.catch(e => {console.log(e)});
 
 /* main script execution  
 */
@@ -36,37 +29,24 @@ async function main() {
 	const data = await JSON.parse(txt.substring(2, txt.length-2));
 	const dogs = data.petfinder.pets.pet;
 
-	const update = await update_firebase(dogs); 
-	const remove = await remove_firebase(dogs);
-
+	await update_firebase(dogs); 
 	await admin.app().delete();
 }
-
-/* if the dog is no longer listed in petfinder, remove from firebase
- */
-async function remove_firebase(dogs){
-
-	// make an array of keys from petfinder dogs
-	var dog_names = [];
-	for (var i = 0; i < dogs.length; i++) {
-		dog_names.push(dogs[i].shelterPetId.$t);
-	}
-
-	// if firebase snapshot key isn't in petfinder, remove it
-	var query = ref.orderByKey();
-	await query.once("value")
-	.then(function(snapshot) {
-		snapshot.forEach(function(childSnapshot) {
-			if (!(dog_names.includes(childSnapshot.key))){
-				ref.child(childSnapshot.key).remove();
-			}
-		});
-	});
-}
 	
-/* update firebase, editing data as required
+/* update firebase, editing and removing data as required
  */
 async function update_firebase(dogs){
+
+	admin.initializeApp({
+  		credential: admin.credential.cert({
+  			"private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
+  			"client_email": process.env.FIREBASE_CLIENT_EMAIL
+  		}),
+  		databaseURL: "https://petfirebase-01.firebaseio.com"
+	});
+
+	const database = admin.database();
+	const ref = database.ref('dogs');
 	
 	for (var i = 0; i < dogs.length; i++) {
 
@@ -85,6 +65,23 @@ async function update_firebase(dogs){
 
 		});
 	}
+
+	// make an array of keys from petfinder dogs
+	var dog_names = [];
+	for (var i = 0; i < dogs.length; i++) {
+		dog_names.push(dogs[i].shelterPetId.$t);
+	}
+
+	// if firebase snapshot key isn't in petfinder, remove it
+	var query = ref.orderByKey();
+	await query.once("value")
+	.then(function(snapshot) {
+		snapshot.forEach(function(childSnapshot) {
+			if (!(dog_names.includes(childSnapshot.key))){
+				ref.child(childSnapshot.key).remove();
+			}
+		});
+	});
 }
 
 /* make sex (M/F) explicit
