@@ -5,8 +5,8 @@
 	3) update firebase with formatted data
 	4) remove placed animals from firebase
  */
-require('dotenv').config({ silent: true });
 
+//require('dotenv').config({ silent: true });
 
 const admin = require("firebase-admin");
 	

@@ -12,7 +12,6 @@
   "author": "bryon.nicoson@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "4.0.0",
     "firebase": "^4.8.1",
     "firebase-admin": "^5.5.1",
     "foreman": "2.0.0",
