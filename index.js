@@ -5,12 +5,14 @@
 	3) update firebase with formatted data
 	4) remove placed animals from firebase
  */
+require('dotenv').config({ silent: true });
+
 
 const admin = require("firebase-admin");
 	
 admin.initializeApp({
   	credential: admin.credential.cert({
-  		"private_key": JSON.parse(process.env.FIREBASE_PRIVATE_KEY),
+  		"private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   		"client_email": process.env.FIREBASE_CLIENT_EMAIL
   	}),
   	databaseURL: "https://petfirebase-01.firebaseio.com"
