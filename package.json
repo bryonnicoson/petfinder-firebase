@@ -4,16 +4,20 @@
   "description": "node js to fetch, modify, and transfer petfinder data to firebase",
   "main": "index.js",
   "scripts": {
-    "start": "index.js"
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/bryonnicoson/petfinder-firebase.git"
   },
   "author": "bryon.nicoson@gmail.com",
   "license": "ISC",
+  "engines": {
+    "node": "8.9.1"
+  },
   "dependencies": {
     "firebase": "^4.8.1",
     "firebase-admin": "^5.5.1",
-    "foreman": "2.0.0",
-    "mocha": "^4.0.1",
-    "node-fetch": "^1.7.3",
-    "request": "^2.83.0"
+    "node-fetch": "^1.7.3"
   }
 }

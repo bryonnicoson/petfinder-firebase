@@ -38,11 +38,13 @@ async function main() {
 
 	const update = await update_firebase(dogs); 
 	const remove = await remove_firebase(dogs);
+
+	await admin.app().delete();
 }
 
 /* if the dog is no longer listed in petfinder, remove from firebase
  */
-function remove_firebase(dogs){
+async function remove_firebase(dogs){
 
 	// make an array of keys from petfinder dogs
 	var dog_names = [];
@@ -52,7 +54,7 @@ function remove_firebase(dogs){
 
 	// if firebase snapshot key isn't in petfinder, remove it
 	var query = ref.orderByKey();
-	query.once("value")
+	await query.once("value")
 	.then(function(snapshot) {
 		snapshot.forEach(function(childSnapshot) {
 			if (!(dog_names.includes(childSnapshot.key))){
