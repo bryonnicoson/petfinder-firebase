@@ -43,7 +43,7 @@ async function update_firebase(dogs){
   			"private_key": process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, '\n'),
   			"client_email": process.env.FIREBASE_CLIENT_EMAIL
   		}),
-  		databaseURL: "https://petfirebase-01.firebaseio.com"
+  		databaseURL: process.env.FIREBASE_URL
 	});
 
 	const database = admin.database();
