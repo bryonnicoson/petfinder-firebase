@@ -1,13 +1,10 @@
 {
-  "engines": {
-    "node": "8.9.1"
-  },
   "name": "petfinder-firebase",
   "version": "0.3.0",
   "description": "node js to fetch, modify, and transfer petfinder data to firebase",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "index.js"
   },
   "author": "bryon.nicoson@gmail.com",
   "license": "ISC",
