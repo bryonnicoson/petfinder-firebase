@@ -2,9 +2,9 @@
   "name": "petfinder-firebase",
   "version": "0.3.0",
   "description": "node js to fetch, modify, and transfer petfinder data to firebase",
-  "main": "index.js",
+  "main": "worker.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node worker.js"
   },
   "repository": {
     "type": "git",
