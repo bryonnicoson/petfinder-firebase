@@ -1,6 +1,6 @@
 /*
 	petfinder-firebase worker.js - node js script - bryon.nicoson@gmail.com
-	running this on heroku
+	running this on heroku express server - request launches process
 
 	1) retrieve petfinder api data for shelter animals
 	2) format/edit data 
@@ -10,22 +10,17 @@
 
 const express = require('express')
 const PORT = process.env.PORT || 5000
-
-//const schedule = require("node-schedule");
 const admin = require("firebase-admin");
 	
-//var work = schedule.scheduleJob('42 * * * *', function() {
-//	console.log("running");	
+express().get('/', (req, res) => {
 	main()
 		.catch(e => {console.log(e)});
-//});
+	res.send('process initiated');
+	}).listen(PORT, () => console.log(`Express listening on port ${ PORT }`));
 
 /* main script execution  
 */
 async function main() {
-
-	express().get('/', (req, res) => res.send('Hi.'))
-			 .listen(PORT, () => console.log(`Express listening on ${ PORT }`))
 
 	const fetch = require("node-fetch");
 	const url = process.env.PETFINDER_URL;
