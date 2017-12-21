@@ -1,4 +1,7 @@
 {
+  "engines": {
+    "node": "8.9.1"
+  },
   "name": "petfinder-firebase",
   "version": "0.3.0",
   "description": "node js to fetch, modify, and transfer petfinder data to firebase",
@@ -7,11 +10,12 @@
     "test": "mocha",
     "start": "node index.js"
   },
-  "author": "",
+  "author": "bryon.nicoson@gmail.com",
   "license": "ISC",
   "dependencies": {
     "firebase": "^4.8.1",
     "firebase-admin": "^5.5.1",
+    "foreman": "2.0.0",
     "mocha": "^4.0.1",
     "node-fetch": "^1.7.3",
     "request": "^2.83.0"
