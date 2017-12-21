@@ -7,7 +7,6 @@
   "description": "node js to fetch, modify, and transfer petfinder data to firebase",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
     "start": "node index.js"
   },
   "author": "bryon.nicoson@gmail.com",
