@@ -51,12 +51,11 @@ async function update_firebase(dogs){
 	
 	for (var i = 0; i < dogs.length; i++) {
 
-		var key = await ref.child(dogs[i].id.$t).update({
+		var key = await ref.child(dogs[i].shelterPetId.$t).update({
 
 			age: dogs[i].age.$t,	
 			breed: edit_breed(dogs[i].breeds.breed),				
 			description: edit_description(dogs[i].description.$t),
-			id: dogs[i].id.$t
 			mix: dogs[i].mix.$t,
 			name: dogs[i].name.$t,
 			options: edit_options(dogs[i].options.option),
@@ -69,9 +68,9 @@ async function update_firebase(dogs){
 	}
 
 	// make an array of keys from petfinder dogs
-	var dog_ids = [];
+	var dog_names = [];
 	for (var i = 0; i < dogs.length; i++) {
-		dog_ids.push(dogs[i].id.$t);
+		dog_names.push(dogs[i].shelterPetId.$t);
 	}
 
 	// if firebase snapshot key isn't in petfinder, remove it
@@ -79,7 +78,7 @@ async function update_firebase(dogs){
 	await query.once("value")
 	.then(function(snapshot) {
 		snapshot.forEach(function(childSnapshot) {
-			if (!(dog_ids.includes(childSnapshot.key))){
+			if (!(dog_names.includes(childSnapshot.key))){
 				ref.child(childSnapshot.key).remove();
 			}
 		});
