@@ -56,6 +56,7 @@ async function update_firebase(dogs){
 			age: dogs[i].age.$t,	
 			breed: edit_breed(dogs[i].breeds.breed),				
 			description: edit_description(dogs[i].description.$t),
+			id: dogs[i].id.$t,
 			mix: dogs[i].mix.$t,
 			name: dogs[i].name.$t,
 			options: edit_options(dogs[i].options.option),
@@ -63,7 +64,7 @@ async function update_firebase(dogs){
 			sex: edit_sex(dogs[i].sex.$t),
 			shelterPetId: dogs[i].shelterPetId.$t,
 			size: edit_size(dogs[i].size.$t)
-
+			
 		});
 	}
 
