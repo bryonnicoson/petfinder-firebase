@@ -51,6 +51,9 @@ async function update_firebase(dogs){
 	
 	for (var i = 0; i < dogs.length; i++) {
 
+		//debug
+		res.send(dogs[i].shelterPetId.$t);
+
 		var key = await ref.child(dogs[i].shelterPetId.$t).update({
 
 			age: dogs[i].age.$t,	
